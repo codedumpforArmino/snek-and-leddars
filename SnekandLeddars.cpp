@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <time.h>
 
-void PrintBoard(int Player1, int Player2, int Player3, int Player4)
+void PrintBoard(int Player[]) //changed so it accepts the array instead of individual players
 {
     static int row;
     static int column;
+    static int PlayerAmount;
 
     for (row = 9; row >= 0; row--)
         {
@@ -22,20 +23,21 @@ void PrintBoard(int Player1, int Player2, int Player3, int Player4)
                 for (column = 0; column <= 9; column++)
                 {
                     //apparently the only way I know how to print the player pieces
+                    PlayerAmount = 0;
                     printf("|");
-                    if (Player1 == (row*10)+column) //check if Player1's position is the same as the block being printed
+                    if (Player[PlayerAmount++] == (row*10)+column) //check if Player1's position is the same as the block being printed
                         printf("A");         
-                    else
-                        printf(" ");
-                    if (Player2 == (row*10)+column)
+                    else //PlayerAmount is now 1, check for player 2
+                        printf(" "); 
+                    if (Player[PlayerAmount++]== (row*10)+column) 
                         printf("B");
                     else
                         printf(" ");
-                    if (Player3 == (row*10)+column)
+                    if (Player[PlayerAmount++] == (row*10)+column)
                         printf("C");
                     else
                         printf(" ");
-                    if (Player4 == (row*10)+column)
+                    if (Player[PlayerAmount++] == (row*10)+column)
                         printf("D");
                     else
                         printf(" ");
@@ -45,26 +47,26 @@ void PrintBoard(int Player1, int Player2, int Player3, int Player4)
             }
             else
             {
-                for (column = 9; column >= 0; column--)
+                  for (column = 9; column >= 0; column--)
                     printf("|%d%d  ", row, column);
                 printf("|\n");
                 for (column = 9; column >= 0; column--)
                 {
                     
                     printf("|");
-                    if (Player1 == (row*10)+column)
+                    if (Player[PlayerAmount++] == (row*10)+column)
                         printf("A");
                     else
                         printf(" ");
-                    if (Player2 == (row*10)+column)
+                    if (Player[PlayerAmount++] == (row*10)+column)
                         printf("B");
                     else
                         printf(" ");
-                    if (Player3 == (row*10)+column)
+                    if (Player[PlayerAmount++] == (row*10)+column)
                         printf("C");
                     else
                         printf(" ");
-                    if (Player4 == (row*10)+column)
+                    if (Player[PlayerAmount++] == (row*10)+column)
                         printf("D");
                     else
                         printf(" ");
@@ -103,6 +105,8 @@ int main()
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
+    int snek[6]; // = {}; //odds are start, even are ends. 98, 62, 68, 32, 14, 1
+    int ledar[6]; // = {}; // 86, 61, 54
     int PlayerPos[4] = {0, 0, 0, 0}; //player position start at pos: 0
     int PlayerTurn = 0; //dictates whos turn it is
     int Totalturn = 0; //in order to tell whose turn it is by using modulo
@@ -115,7 +119,7 @@ int main()
     {
         
         //print board
-        PrintBoard(PlayerPos[0], PlayerPos[1], PlayerPos[2], PlayerPos[3]);
+        PrintBoard(PlayerPos);
 
         //roll dice and place piece to
         PlayerTurn = Totalturn%4;
